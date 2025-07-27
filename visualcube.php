@@ -493,10 +493,18 @@
 		$sw = 0;
 
 		// Viewport
-		$ox = -0.9;
-		$oy = -0.9;
-		$vw = 1.8;
-		$vh = 1.8;
+		$default_port = 1.8;
+		$vw = $default_port;
+		$vh = $default_port;
+		$ox = -$vw / 2;
+		$oy = -$vh / 2;
+		// Allow user to override viewport size via 'port' parameter
+		if (array_key_exists('port', $_REQUEST) && is_numeric($_REQUEST['port'])) {
+		    $vw = floatval($_REQUEST['port']);
+		    $vh = $vw;
+		    $ox = -$vw / 2;
+		    $oy = -$vh / 2;
+		}
 
 		// ------------------[ 3D Cube Generator ]-----------------------
 
