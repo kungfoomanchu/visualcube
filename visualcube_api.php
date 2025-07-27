@@ -259,6 +259,8 @@
 					<td>Setting this value causes the facelets to be rendered with transparency.</td></tr>
 				<tr><td><em>dist</em></td><td>Projection Distance</td><td>1 to 100</td><td><?php echo $DEFAULTS['dist']; ?></td>
 					<td>Controls the distance of the cube from the perspective of the viewer.</td></tr>
+             			<tr><td><em>port</em></td><td>Viewport Size</td><td>Any number (e.g., 1.6)</td><td>1.8</td>
+					<td>Controls the size of the viewport, effectively zooming in or out. Smaller numbers zoom in, reducing the border. 1.5 works well with view=plan</td></tr>
 				<tr><th colspan="5">Added Features</th></tr>
 				<tr><td><em>arw</em></td><td>Arrow Definition</td>
 					<td>Comma separated list in the form:<br/><br/>
