@@ -13,6 +13,8 @@ docker build -t visualcube .
 docker run -p 80:80 --rm visualcube
 ```
 
+Then go to http://localhost:80/visualcube.php in your browser
+
 ##### Prerequisites
 
 * Access to an Apache web server with PHP and ImageMagic installed.
@@ -26,11 +28,21 @@ docker run -p 80:80 --rm visualcube
 4. (Optional) Edit DB_USER, DB_PASS and DB_NAME in visualcube_dbprune.sh and install the cron job.
 5. (Optional) Configure mod_rewrite to redirect image suffixes to corresponding fmt=xxx form. See below.
 
-##### Configuring mod_rewrite
-Add a .htaccess file to the same folder as visualcube.php with something like the following:
-```
-RewriteEngine On
+##### Require php 7.4 on your webserver
+Add a .htaccess file to the same folder as visualcube.php with the following:
 
+```
+# Force PHP 7.4 for this directory
+AddHandler fcgid-script .php
+FCGIWrapper "/dh/cgi-system/php74.cgi" .php
+```
+
+##### Configuring mod_rewrite
+Add this to the .htaccess file:
+
+```
+# URL Rewriting for VisualCube
+RewriteEngine On
 RewriteCond %{HTTP_HOST} ^(www\.example\.com)$
 RewriteRule ^visualcube\.(gif|png|jpg|jpeg|tiff|ico)$ http://www.example.com/visualcube.php?%{QUERY_STRING}&fmt=$1 [L]
 ```

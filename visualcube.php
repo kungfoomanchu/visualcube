@@ -97,7 +97,7 @@
 				// Increment access count
 				mysqli_query($mysql_con, "UPDATE vcache SET rcount=rcount+1 WHERE hash='$hash'");
 				// Disconnect from db
-				mysqli_close();
+				mysqli_close($mysql_con);
 				return;
 			}
 		}
@@ -195,6 +195,7 @@
 			($ENABLE_COOKIES && isset($_COOKIE['vc_r']) && $_COOKIE['vc_r'] != '' ?
 				$_COOKIE['vc_r'] : $DEFAULTS['r']);
 			preg_match_all('/([xyz])(\-?[0-9][0-9]?[0-9]?)/', $_r, $matches);
+			$rtn_ = array();
 			for($i = 0; $i < count($matches[0]); $i++){
 				switch($matches[1][$i]){
 					case 'x' : $rtn_[$i][0] = 0; break;
@@ -204,7 +205,7 @@
 				}
 				$rtn_[$i][1] = $matches[2][$i];
 			}
-			if($rtn_) $rtn = $rtn_;
+			if(count($rtn_) > 0) $rtn = $rtn_;
 		}
 
 		// Retrieve cube Dimension
@@ -642,7 +643,7 @@
 				mysqli_query($mysql_con, "INSERT INTO vcache(hash, fmt, req, rfr, rcount, img) ".
 						"VALUES ('$hash', '$fmt', '$req', '$rfr', 1, '$img')");
 				// Disconnect from db
-				mysqli_close();
+				mysqli_close($mysql_con);
 			}
 		}
 	}

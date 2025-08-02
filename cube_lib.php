@@ -437,7 +437,7 @@
 	function els_FR($cube){
 		global $FR;
 		$frp = 0; // assuming its in position
-		for($j = 0; $j < 4; $j++){ if($cube[3][$j] == $FR){ $frp = $i + 1; break; }}
+		for($j = 0; $j < 4; $j++){ if($cube[3][$j] == $FR){ $frp = $j + 1; break; }}
 		return $frp;
 	}
 	
@@ -613,6 +613,7 @@
 	// Convert cubie cube to face cube, using the default facelet identifiers
 	function face_cube($cube, $dim){
 		// Construct default facelet id scheme
+		$fd = '';
 		for($f = 0; $f < 6; $f++){
 			for($i = 0; $i < $dim; $i++){
 				for($j = 0; $j < $dim; $j++) $fd .= $f;
@@ -691,6 +692,9 @@
 			Array($D*$s+$m-$h, ($L+1)*$s-1-$h), Array(($D+1)*$s-1-$h, ($B+1)*$s-1-$h), Array($F*$s+$m+$h,    $R*$s+$m-$h),
 			Array($F*$s+$m-$h,    $L*$s+$m+$h), Array(   $B*$s+$m+$h,    $L*$s+$m-$h), Array($B*$s+$m-$h,    $R*$s+$m+$h));
 			
+		// Initialize output array
+		$fo = array();
+		
 		// Corners
 		for($i = 0; $i < 8; $i++){
 			$j = $cube[1][$i]; // cornercubie with index j is at
@@ -739,6 +743,7 @@
 			'l' => 'o',
 			'b' => 'g');
 		$fc = face_cube($cube, $dim);
+		$col = '';
 		// Translate face defs into colour defs
 		for($i = 0; $i < strlen($fc); $i++){
 			$col .= $FACE_COL[$fc[$i]];
@@ -842,6 +847,9 @@
 			$n = strlen($alg);
 			$i = 0;
 			$merge_done = false;
+			$malg = '';
+			$lmove = '';
+			$lpow = 0;
 			while($i < $n){
 				$move = $alg[$i];
 				if(move_id($move) != -1){
@@ -867,9 +875,6 @@
 			$lpow = $lpow % 4;
 			if($lpow > 0) $malg .= $lmove . $ALG_POW[$lpow-1];
 			$alg = $malg;
-			$malg = null;
-			$lmove = null;
-			$lpow = null;
 		}
 		return $alg;
 	}
@@ -908,6 +913,9 @@
 	function alg_stats($alg){
 		$n = strlen($alg);
 		$i = 0;
+		$stm = 0;
+		$htm = 0;
+		$qtm = 0;
 		$gen = Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
 		while($i < $n){
 			$move = move_id(substr($alg, $i, 1));
