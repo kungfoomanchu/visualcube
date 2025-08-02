@@ -12,7 +12,7 @@ http://cube.rider.biz/visualcube.php
 docker build -t visualcube .
 docker run -p 80:80 --rm visualcube
 ```
-Then go to http://localhost:80/visualcube.php in your browser
+Then go to http://localhost:80/visualcube.php in your browser if running locally
 
 ##### Prerequisites
 
