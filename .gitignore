@@ -2,4 +2,6 @@
 .dropbox
 nbproject
 local
+.DS_Store
+.claude/
 
